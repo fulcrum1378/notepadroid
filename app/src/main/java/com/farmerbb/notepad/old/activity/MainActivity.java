@@ -1,41 +1,32 @@
-/* Copyright 2014 Braden Farmer
- * Copyright 2015 Sean93Park
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *     http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.farmerbb.notepad.old.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ComponentName;
-import android.content.pm.PackageManager;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintManager;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.util.Base64;
 import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.documentfile.provider.DocumentFile;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.android.NotepadActivity;
@@ -66,21 +57,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.documentfile.provider.DocumentFile;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import us.feras.mdv.MarkdownView;
 
 public class MainActivity extends NotepadBaseActivity implements
-BackButtonDialogFragment.Listener, 
-DeleteDialogFragment.Listener, 
-SaveButtonDialogFragment.Listener,
-FirstRunDialogFragment.Listener,
-NoteListFragment.Listener,
-NoteEditFragment.Listener, 
-NoteViewFragment.Listener {
+        BackButtonDialogFragment.Listener,
+        DeleteDialogFragment.Listener,
+        SaveButtonDialogFragment.Listener,
+        FirstRunDialogFragment.Listener,
+        NoteListFragment.Listener,
+        NoteEditFragment.Listener,
+        NoteViewFragment.Listener {
 
     Object[] filesToExport;
     Object[] filesToDelete;
@@ -98,7 +84,7 @@ NoteViewFragment.Listener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getPackageManager().getComponentEnabledSetting(
+        if (getPackageManager().getComponentEnabledSetting(
                 new ComponentName(this, NotepadActivity.class)
         ) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
             Intent intent = new Intent(this, NotepadActivity.class);
@@ -109,16 +95,15 @@ NoteViewFragment.Listener {
 
         setContentView(R.layout.activity_main);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Set action bar elevation
-            getSupportActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
-        }
+        // Set action bar elevation
+        getSupportActionBar().setElevation(getResources()
+                .getDimensionPixelSize(R.dimen.action_bar_elevation));
 
         // Show dialog if this is the user's first time running Notepad
         SharedPreferences prefMain = getPreferences(Context.MODE_PRIVATE);
-        if(prefMain.getInt("first-run", 0) == 0) {
+        if (prefMain.getInt("first-run", 0) == 0) {
             // Show welcome dialog
-            if(getSupportFragmentManager().findFragmentByTag("firstrunfragment") == null) {
+            if (getSupportFragmentManager().findFragmentByTag("firstrunfragment") == null) {
                 DialogFragment firstRun = new FirstRunDialogFragment();
                 firstRun.show(getSupportFragmentManager(), "firstrunfragment");
             }
@@ -128,7 +113,7 @@ NoteViewFragment.Listener {
 
             // Convert old preferences to new ones
             SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-            if(prefMain.getInt("sort-by", -1) == 0) {
+            if (prefMain.getInt("sort-by", -1) == 0) {
                 SharedPreferences.Editor editor = pref.edit();
                 SharedPreferences.Editor editorMain = prefMain.edit();
 
@@ -137,7 +122,7 @@ NoteViewFragment.Listener {
 
                 editor.apply();
                 editorMain.apply();
-            } else if(prefMain.getInt("sort-by", -1) == 1) {
+            } else if (prefMain.getInt("sort-by", -1) == 1) {
                 SharedPreferences.Editor editor = pref.edit();
                 SharedPreferences.Editor editorMain = prefMain.edit();
 
@@ -148,7 +133,7 @@ NoteViewFragment.Listener {
                 editorMain.apply();
             }
 
-            if(pref.getString("font_size", "null").equals("null")) {
+            if (pref.getString("font_size", "null").equals("null")) {
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("font_size", "large");
                 editor.apply();
@@ -159,45 +144,44 @@ NoteViewFragment.Listener {
             File oldDraft = new File(getFilesDir() + File.separator + "draft");
             File newDraft = new File(getFilesDir() + File.separator + String.valueOf(System.currentTimeMillis()));
 
-            if(oldDraft.exists())
-                oldDraft.renameTo(newDraft);
+            if (oldDraft.exists()) oldDraft.renameTo(newDraft);
         }
 
         // Begin a new FragmentTransaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // This fragment shows NoteListFragment as a sidebar (only seen in tablet mode landscape)
-        if(!(getSupportFragmentManager().findFragmentById(R.id.noteList) instanceof NoteListFragment))
+        if (!(getSupportFragmentManager().findFragmentById(R.id.noteList) instanceof NoteListFragment))
             transaction.replace(R.id.noteList, new NoteListFragment(), "NoteListFragment");
 
         // This fragment shows NoteListFragment in the main screen area (only seen on phones and tablet mode portrait),
         // but only if it doesn't already contain NoteViewFragment or NoteEditFragment.
         // If NoteListFragment is already showing in the sidebar, use WelcomeFragment instead
-        if(!((getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)
-           || (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment))) {
-            if((getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) == null
-               && findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
-               || ((getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment)
-               && findViewById(R.id.layoutMain).getTag().equals("main-layout-large")))
-                    transaction.replace(R.id.noteViewEdit, new WelcomeFragment(), "NoteListFragment");
-            else if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+        if (!((getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)
+                || (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment))) {
+            if ((getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) == null
+                    && findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
+                    || ((getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment)
+                    && findViewById(R.id.layoutMain).getTag().equals("main-layout-large")))
+                transaction.replace(R.id.noteViewEdit, new WelcomeFragment(), "NoteListFragment");
+            else if (findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 transaction.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment");
         }
 
         // Commit fragment transaction
         transaction.commit();
-        
-        if(savedInstanceState != null) {
+
+        if (savedInstanceState != null) {
             ArrayList<String> filesToExportList = savedInstanceState.getStringArrayList("files_to_export");
-            if(filesToExportList != null)
+            if (filesToExportList != null)
                 filesToExport = filesToExportList.toArray();
 
             ArrayList<String> filesToDeleteList = savedInstanceState.getStringArrayList("files_to_delete");
-            if(filesToDeleteList != null)
+            if (filesToDeleteList != null)
                 filesToDelete = filesToDeleteList.toArray();
 
             ArrayList<String> savedCab = savedInstanceState.getStringArrayList("cab");
-            if(savedCab != null) {
+            if (savedCab != null) {
                 inCabMode = true;
                 cab = savedCab;
             }
@@ -216,7 +200,7 @@ NoteViewFragment.Listener {
     protected void onPause() {
         super.onPause();
 
-        if(!inCabMode)
+        if (!inCabMode)
             cab.clear();
     }
 
@@ -230,17 +214,17 @@ NoteViewFragment.Listener {
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
         super.dispatchKeyShortcutEvent(event);
-        if(event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
-            if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
+            if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
                 NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
                 fragment.dispatchKeyShortcutEvent(event.getKeyCode());
-            } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+            } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
                 NoteViewFragment fragment = (NoteViewFragment) getSupportFragmentManager().findFragmentByTag("NoteViewFragment");
                 fragment.dispatchKeyShortcutEvent(event.getKeyCode());
-            } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+            } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
                 NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
                 fragment.dispatchKeyShortcutEvent(event.getKeyCode());
-            } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+            } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
                 WelcomeFragment fragment = (WelcomeFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
                 fragment.dispatchKeyShortcutEvent(event.getKeyCode());
             }
@@ -252,12 +236,12 @@ NoteViewFragment.Listener {
 
     @Override
     public void onDeleteDialogPositiveClick() {
-        if(filesToDelete != null) {
+        if (filesToDelete != null) {
             reallyDeleteNotes();
-        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
             NoteViewFragment fragment = (NoteViewFragment) getSupportFragmentManager().findFragmentByTag("NoteViewFragment");
             fragment.onDeleteDialogPositiveClick();
-        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
             NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
             fragment.onDeleteDialogPositiveClick();
         }
@@ -265,16 +249,16 @@ NoteViewFragment.Listener {
 
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+        if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
             NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.onBackPressed();
-        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
             NoteViewFragment fragment = (NoteViewFragment) getSupportFragmentManager().findFragmentByTag("NoteViewFragment");
             fragment.onBackPressed();
-        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
             NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
             fragment.onBackPressed(null);
-        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
             WelcomeFragment fragment = (WelcomeFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.onBackPressed();
         }
@@ -295,20 +279,20 @@ NoteViewFragment.Listener {
     public void viewEditNote(String filename, boolean isEdit) {
         String currentFilename;
 
-        if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+        if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
             NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
             currentFilename = fragment.getFilename();
-        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
             NoteViewFragment fragment = (NoteViewFragment) getSupportFragmentManager().findFragmentByTag("NoteViewFragment");
             currentFilename = fragment.getFilename();
         } else
             currentFilename = "";
 
-        if(!currentFilename.equals(filename)) {
-            if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+        if (!currentFilename.equals(filename)) {
+            if (findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 cab.clear();
 
-            if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+            if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
                 NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
                 fragment.switchNotes(filename);
             } else {
@@ -318,7 +302,7 @@ NoteViewFragment.Listener {
                 Fragment fragment;
                 String tag;
 
-                if(isEdit) {
+                if (isEdit) {
                     fragment = new NoteEditFragment();
                     tag = "NoteEditFragment";
                 } else {
@@ -378,13 +362,13 @@ NoteViewFragment.Listener {
     }
 
     private void showDeleteDialog(boolean clearFilesToDelete) {
-        if(clearFilesToDelete) filesToDelete = null;
+        if (clearFilesToDelete) filesToDelete = null;
 
         Bundle bundle = new Bundle();
         bundle.putInt("dialog_title",
                 filesToDelete == null || filesToDelete.length == 1
-                ? R.string.dialog_delete_button_title
-                : R.string.dialog_delete_button_title_plural);
+                        ? R.string.dialog_delete_button_title
+                        : R.string.dialog_delete_button_title_plural);
 
         DialogFragment deleteFragment = new DeleteDialogFragment();
         deleteFragment.setArguments(bundle);
@@ -404,7 +388,7 @@ NoteViewFragment.Listener {
 
     @Override
     public String getCabString(int size) {
-        if(size == 1)
+        if (size == 1)
             return getResources().getString(R.string.cab_note_selected);
         else
             return getResources().getString(R.string.cab_notes_selected);
@@ -420,7 +404,7 @@ NoteViewFragment.Listener {
 
     private void reallyDeleteNotes() {
         // Build the pathname to delete each file, them perform delete operation
-        for(Object file : filesToDelete) {
+        for (Object file : filesToDelete) {
             File fileToDelete = new File(getFilesDir() + File.separator + file);
             fileToDelete.delete();
         }
@@ -439,10 +423,9 @@ NoteViewFragment.Listener {
         LocalBroadcastManager.getInstance(this).sendBroadcast(listIntent);
 
         // Show toast notification
-        if(filesToDelete.length == 1)
+        if (filesToDelete.length == 1)
             showToast(R.string.note_deleted);
-        else
-            showToast(R.string.notes_deleted);
+        else showToast(R.string.notes_deleted);
 
         filesToDelete = null;
     }
@@ -453,23 +436,19 @@ NoteViewFragment.Listener {
         filesToExport = cab.toArray();
         cab.clear();
 
-        if(filesToExport.length == 1 || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (filesToExport.length == 1) {
             fileBeingExported = 0;
             reallyExportNotes();
-        } else {
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-
-            try {
-                startActivityForResult(intent, EXPORT_TREE);
-            } catch (ActivityNotFoundException e) {
-                showToast(R.string.error_exporting_notes);
-            }
+        } else try {
+            startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), EXPORT_TREE);
+        } catch (ActivityNotFoundException e) {
+            showToast(R.string.error_exporting_notes);
         }
     }
 
     @Override
     public void exportNote(String filename) {
-        filesToExport = new Object[] {filename};
+        filesToExport = new Object[]{filename};
         fileBeingExported = 0;
         reallyExportNotes();
     }
@@ -506,7 +485,7 @@ NoteViewFragment.Listener {
         // Remove any invalid characters
         final String[] characters = new String[]{"<", ">", ":", "\"", "/", "\\\\", "\\|", "\\?", "\\*"};
 
-        for(String character : characters) {
+        for (String character : characters) {
             filename = filename.replaceAll(character, "");
         }
 
@@ -515,16 +494,16 @@ NoteViewFragment.Listener {
 
         // To ensure that the generated filename fits within filesystem limitations,
         // truncate the filename to ~245 characters.
-        if(fileNameType.equals("text-only")) {
+        if (fileNameType.equals("text-only")) {
             int maxLength = 245;
-            if(filename.length() > maxLength)
+            if (filename.length() > maxLength)
                 filename = filename.substring(0, maxLength);
         } else {
             int maxLength = 245 - (lastModified.length() + 1);
-            if(filename.length() > maxLength)
+            if (filename.length() > maxLength)
                 filename = filename.substring(0, maxLength);
 
-            if(fileNameType.equals("text-timestamp")) {
+            if (fileNameType.equals("text-timestamp")) {
                 //Add timestamp as suffix
                 filename = filename + "_" + lastModified;
             } else {
@@ -532,7 +511,6 @@ NoteViewFragment.Listener {
                 filename = lastModified + "_" + filename;
             }
         }
-
 
 
         return filename + ".txt";
@@ -557,17 +535,17 @@ NoteViewFragment.Listener {
 
         // Load the file
         String line = buffer.readLine();
-        while (line != null ) {
+        while (line != null) {
             note.append(line);
             line = buffer.readLine();
-            if(line != null)
+            if (line != null)
                 note.append("\n");
         }
 
         // Close file on disk
         reader.close();
 
-        return(note.toString());
+        return (note.toString());
     }
 
     // Loads first line of a note for display in the ListView
@@ -584,14 +562,14 @@ NoteViewFragment.Listener {
         // Close file on disk
         reader.close();
 
-        return(line);
+        return (line);
     }
 
     // Calculates last modified date/time of a note for display in the ListView
     @Override
     public String loadNoteDate(String filename) {
         Date lastModified = new Date(Long.parseLong(filename));
-        return(DateFormat
+        return (DateFormat
                 .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
                 .format(lastModified));
     }
@@ -600,11 +578,9 @@ NoteViewFragment.Listener {
     private String getNoteTimestamp(String filename) {
         //Get the current locale
         Locale locale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             locale = getResources().getConfiguration().getLocales().get(0);
-        } else{
-            locale = getResources().getConfiguration().locale;
-        }
+        } else locale = getResources().getConfiguration().locale;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm", locale);
         return dateFormat.format(new Date(Long.parseLong(filename)));
     }
@@ -613,10 +589,10 @@ NoteViewFragment.Listener {
     public void showFab() {
         inCabMode = false;
 
-        if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+        if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
             NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.showFab();
-        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
             WelcomeFragment fragment = (WelcomeFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.showFab();
         }
@@ -626,10 +602,10 @@ NoteViewFragment.Listener {
     public void hideFab() {
         inCabMode = true;
 
-        if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+        if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
             NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.hideFab();
-        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
             WelcomeFragment fragment = (WelcomeFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.hideFab();
         }
@@ -649,21 +625,20 @@ NoteViewFragment.Listener {
         editor2.apply();
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
 
-        if(resultCode == RESULT_OK && resultData != null) {
+        if (resultCode == RESULT_OK && resultData != null) {
             successful = true;
 
-            if(requestCode == IMPORT) {
+            if (requestCode == IMPORT) {
                 Uri uri = resultData.getData();
                 ClipData clipData = resultData.getClipData();
 
-                if(uri != null)
+                if (uri != null)
                     successful = importNote(uri);
-                else if(clipData != null)
-                    for(int i = 0; i < clipData.getItemCount(); i++) {
+                else if (clipData != null)
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
                         successful = importNote(clipData.getItemAt(i).getUri());
                     }
 
@@ -676,7 +651,7 @@ NoteViewFragment.Listener {
                 Intent listNotesIntent = new Intent();
                 listNotesIntent.setAction("com.farmerbb.notepad.old.LIST_NOTES");
                 LocalBroadcastManager.getInstance(this).sendBroadcast(listNotesIntent);
-            } else if(requestCode == EXPORT) {
+            } else if (requestCode == EXPORT) {
                 try {
                     saveExportedNote(loadNote(filesToExport[fileBeingExported].toString()), resultData.getData());
                 } catch (IOException e) {
@@ -684,7 +659,7 @@ NoteViewFragment.Listener {
                 }
 
                 fileBeingExported++;
-                if(fileBeingExported < filesToExport.length)
+                if (fileBeingExported < filesToExport.length)
                     reallyExportNotes();
                 else
                     showToast(successful
@@ -693,10 +668,10 @@ NoteViewFragment.Listener {
 
                 File fileToDelete = new File(getFilesDir() + File.separator + "exported_note");
                 fileToDelete.delete();
-            } else if(requestCode == EXPORT_TREE) {
+            } else if (requestCode == EXPORT_TREE) {
                 DocumentFile tree = DocumentFile.fromTreeUri(this, resultData.getData());
 
-                for(Object exportFilename : filesToExport) {
+                for (Object exportFilename : filesToExport) {
                     try {
                         DocumentFile file = tree.createFile(
                                 "text/plain",
@@ -704,7 +679,7 @@ NoteViewFragment.Listener {
                                         loadNoteTitle(exportFilename.toString()),
                                         getNoteTimestamp(exportFilename.toString())));
 
-                        if(file != null)
+                        if (file != null)
                             saveExportedNote(loadNote(exportFilename.toString()), file.getUri());
                         else
                             successful = false;
@@ -735,7 +710,7 @@ NoteViewFragment.Listener {
             long suffix = 0;
 
             // Handle cases where a note may have a duplicate title
-            while(importedFile.exists()) {
+            while (importedFile.exists()) {
                 suffix++;
                 importedFile = new File(getFilesDir(), Long.toString(System.currentTimeMillis() + suffix));
             }
@@ -743,7 +718,7 @@ NoteViewFragment.Listener {
             InputStream is = getContentResolver().openInputStream(uri);
             byte[] data = new byte[is.available()];
 
-            if(data.length > 0) {
+            if (data.length > 0) {
                 OutputStream os = new FileOutputStream(importedFile);
                 is.read(data);
                 os.write(data);
@@ -763,8 +738,7 @@ NoteViewFragment.Listener {
         SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
 
         // Create a WebView object specifically for printing
-        boolean generateHtml = !(pref.getBoolean("markdown", false)
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+        boolean generateHtml = !pref.getBoolean("markdown", false);
         WebView webView = generateHtml ? new WebView(this) : new MarkdownView(this);
 
         // Apply theme
@@ -773,19 +747,19 @@ NoteViewFragment.Listener {
 
         String fontFamily = null;
 
-        if(theme.contains("sans")) {
+        if (theme.contains("sans")) {
             fontFamily = "sans-serif";
         }
 
-        if(theme.contains("serif")) {
+        if (theme.contains("serif")) {
             fontFamily = "serif";
         }
 
-        if(theme.contains("monospace")) {
+        if (theme.contains("monospace")) {
             fontFamily = "monospace";
         }
 
-        switch(pref.getString("font_size", "normal")) {
+        switch (pref.getString("font_size", "normal")) {
             case "smallest":
                 textSize = 12;
                 break;
@@ -803,15 +777,15 @@ NoteViewFragment.Listener {
                 break;
         }
 
-        String topBottom = " " + Float.toString(getResources().getDimension(R.dimen.padding_top_bottom_print) / getResources().getDisplayMetrics().density) + "px";
-        String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right_print) / getResources().getDisplayMetrics().density) + "px";
-        String fontSize = " " + Integer.toString(textSize) + "px";
+        String topBottom = " " + getResources().getDimension(R.dimen.padding_top_bottom_print) / getResources().getDisplayMetrics().density + "px";
+        String leftRight = " " + getResources().getDimension(R.dimen.padding_left_right_print) / getResources().getDisplayMetrics().density + "px";
+        String fontSize = " " + textSize + "px";
 
         String css = "body { " +
-                        "margin:" + topBottom + topBottom + leftRight + leftRight + "; " +
-                        "font-family:" + fontFamily + "; " +
-                        "font-size:" + fontSize + "; " +
-                        "}";
+                "margin:" + topBottom + topBottom + leftRight + leftRight + "; " +
+                "font-family:" + fontFamily + "; " +
+                "font-size:" + fontSize + "; " +
+                "}";
 
         webView.getSettings().setJavaScriptEnabled(false);
         webView.getSettings().setLoadsImagesAutomatically(false);
@@ -823,21 +797,18 @@ NoteViewFragment.Listener {
         });
 
         // Load content into WebView
-        if(generateHtml) {
+        if (generateHtml) {
             webView.loadDataWithBaseURL(null,
                     "<link rel='stylesheet' type='text/css' href='data:text/css;base64,"
                             + Base64.encodeToString(css.getBytes(), Base64.DEFAULT)
-                            +"' /><html><body><p>"
+                            + "' /><html><body><p>"
                             + StringUtils.replace(contentToPrint, "\n", "<br>")
                             + "</p></body></html>",
                     "text/HTML", "UTF-8", null);
-        } else
-            ((MarkdownView) webView).loadMarkdown(contentToPrint,
-                    "data:text/css;base64," + Base64.encodeToString(css.getBytes(), Base64.DEFAULT));
+        } else ((MarkdownView) webView).loadMarkdown(contentToPrint,
+                "data:text/css;base64," + Base64.encodeToString(css.getBytes(), Base64.DEFAULT));
     }
 
-    @SuppressWarnings("deprecation")
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void createWebPrintJob(WebView webView) {
         // Get a PrintManager instance
         PrintManager printManager = (PrintManager) getSystemService(PRINT_SERVICE);
@@ -855,13 +826,13 @@ NoteViewFragment.Listener {
     public void startMultiSelect() {
         NoteListFragment fragment = null;
 
-        if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+        if (findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
             fragment = (NoteListFragment) getSupportFragmentManager().findFragmentById(R.id.noteViewEdit);
 
-        if(findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
+        if (findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
             fragment = (NoteListFragment) getSupportFragmentManager().findFragmentById(R.id.noteList);
 
-        if(fragment != null)
+        if (fragment != null)
             fragment.startMultiSelect();
     }
 
@@ -871,28 +842,27 @@ NoteViewFragment.Listener {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        if(filesToExport != null && filesToExport.length > 0) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if (filesToExport != null && filesToExport.length > 0) {
             ArrayList<String> filesToExportList = new ArrayList<>();
-            for(Object file : filesToExport) {
+            for (Object file : filesToExport)
                 filesToExportList.add(file.toString());
-            }
 
             outState.putStringArrayList("files_to_export", filesToExportList);
         }
 
-        if(filesToDelete != null && filesToDelete.length > 0) {
+        if (filesToDelete != null && filesToDelete.length > 0) {
             ArrayList<String> filesToDeleteList = new ArrayList<>();
-            for(Object file : filesToDelete) {
+            for (Object file : filesToDelete) {
                 filesToDeleteList.add(file.toString());
             }
 
             outState.putStringArrayList("files_to_delete", filesToDeleteList);
         }
 
-        if(inCabMode && cab.size() > 0)
+        if (inCabMode && cab.size() > 0)
             outState.putStringArrayList("cab", cab);
-        
+
         super.onSaveInstanceState(outState);
     }
 

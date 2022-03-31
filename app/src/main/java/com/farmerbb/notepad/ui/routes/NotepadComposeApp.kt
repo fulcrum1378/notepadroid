@@ -1,18 +1,3 @@
-/* Copyright 2021 Braden Farmer
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.farmerbb.notepad.ui.routes
 
 import androidx.activity.compose.BackHandler
@@ -20,7 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,15 +21,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.ui.content.*
-import com.farmerbb.notepad.ui.widgets.NoteListMenu
-import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
 import com.farmerbb.notepad.models.NavState
+import com.farmerbb.notepad.models.NavState.*
 import com.farmerbb.notepad.models.NavState.Companion.EDIT
 import com.farmerbb.notepad.models.NavState.Companion.VIEW
-import com.farmerbb.notepad.models.NavState.Edit
-import com.farmerbb.notepad.models.NavState.Empty
-import com.farmerbb.notepad.models.NavState.View
+import com.farmerbb.notepad.ui.content.EditNoteContent
+import com.farmerbb.notepad.ui.content.NoteListContent
+import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.ui.widgets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.getViewModel
@@ -81,7 +64,7 @@ fun NotepadComposeApp(
     var navState by rememberSaveable(
         saver = Saver(
             save = {
-                when(val state = it.value) {
+                when (val state = it.value) {
                     is View -> VIEW to state.id
                     is Edit -> EDIT to state.id
                     else -> "" to null
@@ -89,7 +72,7 @@ fun NotepadComposeApp(
             },
             restore = {
                 mutableStateOf(
-                    when(it.first) {
+                    when (it.first) {
                         VIEW -> View(it.second ?: 0)
                         EDIT -> Edit(it.second)
                         else -> Empty
@@ -100,20 +83,15 @@ fun NotepadComposeApp(
     ) { mutableStateOf(initState) }
 
     var showAboutDialog by remember { mutableStateOf(false) }
-    if(showAboutDialog) {
+    if (showAboutDialog) {
         AboutDialog(
-            onDismiss = {
-                showAboutDialog = false
-            },
-            checkForUpdates = {
-                showAboutDialog = false
-                vm.checkForUpdates()
-            }
+            onDismiss = { showAboutDialog = false },
+            checkForUpdates = { showAboutDialog = false }
         )
     }
 
     var showSettingsDialog by remember { mutableStateOf(false) }
-    if(showSettingsDialog) {
+    if (showSettingsDialog) {
         SettingsDialog(
             onDismiss = {
                 showSettingsDialog = false
@@ -123,7 +101,7 @@ fun NotepadComposeApp(
 
     var showDeleteDialog by remember { mutableStateOf(false) }
     var noteToDelete: Long? by remember { mutableStateOf(null) }
-    if(showDeleteDialog) {
+    if (showDeleteDialog) {
         DeleteAlertDialog(
             onConfirm = {
                 showDeleteDialog = false
@@ -168,9 +146,9 @@ fun NotepadComposeApp(
         onBack = onBack
     )
 
-    val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
-    val primaryColorRes by vm.prefs.primaryColorRes.collectAsState()
-    val secondaryColorRes by vm.prefs.secondaryColorRes.collectAsState()
+    val backgroundColorRes = vm.prefs.backgroundColorRes
+    val primaryColorRes = vm.prefs.primaryColorRes
+    val secondaryColorRes = vm.prefs.secondaryColorRes
     val textFontSize by vm.prefs.textFontSize.collectAsState()
     val dateFontSize by vm.prefs.dateFontSize.collectAsState()
     val fontFamily by vm.prefs.fontFamily.collectAsState()
@@ -198,7 +176,7 @@ fun NotepadComposeApp(
         navState = View(id)
     }
 
-    when(val state = navState) {
+    when (val state = navState) {
         Empty -> {
             LaunchedEffect(Unit) {
                 vm.clearNote()
@@ -226,7 +204,7 @@ fun NotepadComposeApp(
                 )
             }
             content = {
-                if(isMultiPane) {
+                if (isMultiPane) {
                     EmptyDetails()
                 } else {
                     NoteListContentShared()
@@ -310,7 +288,7 @@ fun NotepadComposeApp(
             )
         },
         floatingActionButton = {
-            if(navState == Empty) {
+            if (navState == Empty) {
                 FloatingActionButton(
                     onClick = { navState = Edit() },
                     backgroundColor = colorResource(id = R.color.primary),
@@ -325,7 +303,7 @@ fun NotepadComposeApp(
             }
         },
         content = {
-            if(isMultiPane) {
+            if (isMultiPane) {
                 Row {
                     Box(modifier = Modifier.weight(1f)) {
                         NoteListContentShared()

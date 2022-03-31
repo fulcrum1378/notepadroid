@@ -1,32 +1,16 @@
-/* Copyright 2014 Braden Farmer
- * Copyright 2015 Sean93Park
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *     http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.farmerbb.notepad.old.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -43,8 +27,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.farmerbb.notepad.old.activity.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.old.activity.MainActivity;
 import com.farmerbb.notepad.old.activity.SettingsActivity;
 import com.farmerbb.notepad.old.adapter.NoteListAdapter;
 import com.farmerbb.notepad.old.adapter.NoteListDateAdapter;
@@ -61,13 +53,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class NoteListFragment extends Fragment {
 
@@ -89,29 +74,9 @@ public class NoteListFragment extends Fragment {
     IntentFilter filter = new IntentFilter("com.farmerbb.notepad.old.LIST_NOTES");
     ListNotesReceiver receiver = new ListNotesReceiver();
 
-    /* The activity that creates an instance of this fragment must
- * implement this interface in order to receive event call backs. */
-    public interface Listener {
-        void viewNote(String filename);
-        void editNote(String filename);
-        String getCabString(int size);
-        void exportNotes();
-        void deleteNotes();
-        String loadNoteTitle(String filename) throws IOException;
-        String loadNoteDate(String filename);
-        void showFab();
-        void hideFab();
-        void startMultiSelect();
-        ArrayList<String> getCabArray();
-    }
-
-    // Use this instance of the interface to deliver action events
-    Listener listener;
-
     // Override the Fragment.onAttach() method to instantiate the Listener
-    @SuppressWarnings("deprecation")
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
         // Verify that the host activity implements the callback interface
         try {
@@ -124,18 +89,8 @@ public class NoteListFragment extends Fragment {
         }
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_note_list, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        // Set values
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
-    }
+    // Use this instance of the interface to deliver action events
+    Listener listener;
 
     @Override
     public void onResume() {
@@ -143,7 +98,7 @@ public class NoteListFragment extends Fragment {
 
         // Before we do anything else, check for a saved draft; if one exists, load it
         SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
-        if(getId() == R.id.noteViewEdit && prefMain.getLong("draft-name", 0) != 0) {
+        if (getId() == R.id.noteViewEdit && prefMain.getLong("draft-name", 0) != 0) {
             Bundle bundle = new Bundle();
             bundle.putString("filename", "draft");
 
@@ -157,13 +112,13 @@ public class NoteListFragment extends Fragment {
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
         } else {
-            if(getId() == R.id.noteViewEdit) {
+            if (getId() == R.id.noteViewEdit) {
                 // Change window title
                 String title = getResources().getString(R.string.app_name);
 
                 getActivity().setTitle(title);
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     Bitmap bitmap = ((BitmapDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.ic_recents_logo)).getBitmap();
 
                     ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, bitmap, ContextCompat.getColor(getActivity(), R.color.primary));
@@ -186,15 +141,8 @@ public class NoteListFragment extends Fragment {
             LinearLayout noteViewEdit = getActivity().findViewById(R.id.noteViewEdit);
             LinearLayout noteList = getActivity().findViewById(R.id.noteList);
 
-            if(theme.contains("light")) {
-                noteViewEdit.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
-                noteList.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
-            }
-
-            if(theme.contains("dark")) {
-                noteViewEdit.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
-                noteList.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
-            }
+            noteViewEdit.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
+            noteList.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
 
             // Declare ListView
             listView = getActivity().findViewById(R.id.listView1);
@@ -202,6 +150,19 @@ public class NoteListFragment extends Fragment {
             // Refresh list of notes onResume (instead of onCreate) to reflect additions/deletions and preference changes
             listNotes();
         }
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_note_list, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Set values
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
     }
 
     // Register and unregister ListNotesReceiver (for tablet layout)
@@ -214,12 +175,12 @@ public class NoteListFragment extends Fragment {
         // Floating action button
         FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.setImageResource(R.drawable.ic_action_new);
-        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
+        if (getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
             floatingActionButton.hide();
 
         SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        if(getId() == R.id.noteViewEdit && prefMain.getLong("draft-name", 0) == 0) {
+        if (getId() == R.id.noteViewEdit && prefMain.getLong("draft-name", 0) == 0) {
             floatingActionButton.show();
             floatingActionButton.setOnClickListener(v -> {
                 ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
@@ -233,12 +194,17 @@ public class NoteListFragment extends Fragment {
 
                 // Add NoteEditFragment
                 getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit();
+                        .beginTransaction()
+                        .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
             });
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        if (getId() == R.id.noteViewEdit) inflater.inflate(R.menu.main, menu);
     }
 
     @Override
@@ -248,17 +214,11 @@ public class NoteListFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if(getId() == R.id.noteViewEdit)
-            inflater.inflate(R.menu.main, menu);
-    }
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_start_selection:
                 listener.startMultiSelect();
                 return true;
@@ -270,7 +230,7 @@ public class NoteListFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"text/plain", "text/html", "text/x-markdown"});
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"text/plain", "text/html", "text/x-markdown"});
                 intent.setType("*/*");
 
                 try {
@@ -289,7 +249,7 @@ public class NoteListFragment extends Fragment {
     }
 
     public void startMultiSelect() {
-        if(listView.getAdapter().getCount() > 0)
+        if (listView.getAdapter().getCount() > 0)
             listView.setItemChecked(-1, true);
         else
             showToast(R.string.no_notes_to_select);
@@ -304,8 +264,8 @@ public class NoteListFragment extends Fragment {
         int numOfNotes = listOfFiles.length;
 
         // Remove any files from the list that aren't notes
-        for(String listOfFile : listOfFiles) {
-            if(NumberUtils.isCreatable(listOfFile))
+        for (String listOfFile : listOfFiles) {
+            if (NumberUtils.isCreatable(listOfFile))
                 listOfNotes.add(listOfFile);
             else
                 numOfNotes--;
@@ -320,19 +280,17 @@ public class NoteListFragment extends Fragment {
 
         ArrayList<NoteListItem> list = new ArrayList<>(numOfNotes);
 
-        for(int i = 0; i < numOfNotes; i++) {
+        for (int i = 0; i < numOfNotes; i++)
             listOfNotesByDate[i] = listOfNotes.get(i);
-        }
 
         // If sort-by is "by date", sort in reverse order
-        if(sortBy.startsWith("date")) {
+        if (sortBy.startsWith("date")) {
             Arrays.sort(listOfNotesByDate, Collections.reverseOrder());
-            if(sortBy.endsWith("reversed"))
-                ArrayUtils.reverse(listOfNotesByDate);
+            if (sortBy.endsWith("reversed")) ArrayUtils.reverse(listOfNotesByDate);
         }
 
         // Get array of first lines of each note
-        for(int i = 0; i < numOfNotes; i++) {
+        for (int i = 0; i < numOfNotes; i++)
             try {
                 String title = listener.loadNoteTitle(listOfNotesByDate[i]);
                 String date = listener.loadNoteDate(listOfNotesByDate[i]);
@@ -340,26 +298,25 @@ public class NoteListFragment extends Fragment {
             } catch (IOException e) {
                 showToast(R.string.error_loading_list);
             }
-        }
 
         // If sort-by is "by name", sort alphabetically
-        if(sortBy.startsWith("name")) {
+        if (sortBy.startsWith("name")) {
             // Copy titles array
             System.arraycopy(listOfTitlesByDate, 0, listOfTitlesByName, 0, numOfNotes);
 
             // Sort titles
             Arrays.sort(listOfTitlesByName, NoteListItem.NoteComparatorTitle);
-            if(sortBy.endsWith("reversed"))
+            if (sortBy.endsWith("reversed"))
                 ArrayUtils.reverse(listOfTitlesByName);
 
             // Initialize notes array
-            for(int i = 0; i < numOfNotes; i++)
+            for (int i = 0; i < numOfNotes; i++)
                 listOfNotesByName[i] = "new";
 
             // Copy filenames array with new sort order of titles and nullify date arrays
-            for(int i = 0; i < numOfNotes; i++) {
-                for(int j = 0; j < numOfNotes; j++) {
-                    if(listOfTitlesByName[i].getNote().equals(listOfTitlesByDate[j].getNote())
+            for (int i = 0; i < numOfNotes; i++) {
+                for (int j = 0; j < numOfNotes; j++) {
+                    if (listOfTitlesByName[i].getNote().equals(listOfTitlesByDate[j].getNote())
                             && listOfNotesByName[i].equals("new")) {
                         listOfNotesByName[i] = listOfNotesByDate[j];
                         listOfNotesByDate[j] = "";
@@ -370,7 +327,7 @@ public class NoteListFragment extends Fragment {
 
             // Populate ArrayList with notes, showing name as first line of the notes
             list.addAll(Arrays.asList(listOfTitlesByName));
-        } else if(sortBy.startsWith("date"))
+        } else if (sortBy.startsWith("date"))
             list.addAll(Arrays.asList(listOfTitlesByDate));
 
         // Create the custom adapters to bind the array to the ListView
@@ -378,10 +335,9 @@ public class NoteListFragment extends Fragment {
         final NoteListAdapter adapter = new NoteListAdapter(getActivity(), list);
 
         // Display the ListView
-        if(showDate)
+        if (showDate)
             listView.setAdapter(dateAdapter);
-        else
-            listView.setAdapter(adapter);
+        else listView.setAdapter(adapter);
 
         listView.setSelection(ScrollPositions.getInstance().getPosition());
 
@@ -394,13 +350,13 @@ public class NoteListFragment extends Fragment {
         listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
             ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
 
-            if(sortBy.startsWith("date")) {
-                if(directEdit)
+            if (sortBy.startsWith("date")) {
+                if (directEdit)
                     listener.editNote(finalListByDate[position]);
                 else
                     listener.viewNote(finalListByDate[position]);
-            } else if(sortBy.startsWith("name")) {
-                if(directEdit)
+            } else if (sortBy.startsWith("name")) {
+                if (directEdit)
                     listener.editNote(finalListByName[position]);
                 else
                     listener.viewNote(finalListByName[position]);
@@ -416,16 +372,16 @@ public class NoteListFragment extends Fragment {
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 // Respond to clicks on the actions in the CAB
-                switch(item.getItemId()) {
+                switch (item.getItemId()) {
                     case R.id.action_select_all:
                         cab.clear();
 
-                        for(int i = 0; i < listView.getAdapter().getCount(); i++) {
+                        for (int i = 0; i < listView.getAdapter().getCount(); i++) {
                             listView.setItemChecked(i, true);
                         }
                         return false;
                     case R.id.action_export:
-                        if(cab.size() > 0) {
+                        if (cab.size() > 0) {
                             mode.finish(); // Action picked, so close the CAB
                             listener.exportNotes();
                             return true;
@@ -434,7 +390,7 @@ public class NoteListFragment extends Fragment {
                             return false;
                         }
                     case R.id.action_delete:
-                        if(cab.size() > 0) {
+                        if (cab.size() > 0) {
                             mode.finish(); // Action picked, so close the CAB
                             listener.deleteNotes();
                             return true;
@@ -468,17 +424,17 @@ public class NoteListFragment extends Fragment {
 
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-                if(position > -1) {
+                if (position > -1) {
                     // Add/remove filenames to cab array as they are checked/unchecked
-                    if(checked) {
-                        if(sortBy.startsWith("date"))
+                    if (checked) {
+                        if (sortBy.startsWith("date"))
                             cab.add(finalListByDate[position]);
-                        if(sortBy.startsWith("name"))
+                        if (sortBy.startsWith("name"))
                             cab.add(finalListByName[position]);
                     } else {
-                        if(sortBy.startsWith("date"))
+                        if (sortBy.startsWith("date"))
                             cab.remove(finalListByDate[position]);
-                        if(sortBy.startsWith("name"))
+                        if (sortBy.startsWith("name"))
                             cab.remove(finalListByName[position]);
                     }
 
@@ -495,42 +451,33 @@ public class NoteListFragment extends Fragment {
             }
         });
 
-        if(cab.size() > 0) {
+        if (cab.size() > 0) {
             List<String> cabClone = new ArrayList<>(cab);
             cab.clear();
 
             String[] array = null;
-            if(sortBy.startsWith("date"))
+            if (sortBy.startsWith("date"))
                 array = finalListByDate;
-            if(sortBy.startsWith("name"))
+            if (sortBy.startsWith("name"))
                 array = finalListByName;
 
-            if(array != null) {
-                for(String filename : cabClone) {
-                    for(int i = 0; i < array.length; i++) {
-                        if(filename.equals(array[i]))
+            if (array != null)
+                for (String filename : cabClone)
+                    for (int i = 0; i < array.length; i++)
+                        if (filename.equals(array[i]))
                             listView.setItemChecked(i, true);
-                    }
-                }
-            }
         }
 
         // If there are no saved notes, then display the empty view
-        if(numOfNotes == 0) {
+        if (numOfNotes == 0) {
             TextView empty = getActivity().findViewById(R.id.empty);
             listView.setEmptyView(empty);
         }
     }
 
-    // Method used to generate toast notifications
-    private void showToast(int message) {
-        Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
     public void dispatchKeyShortcutEvent(int keyCode) {
-        if(getId() == R.id.noteViewEdit) {
-            switch(keyCode) {
+        if (getId() == R.id.noteViewEdit) {
+            switch (keyCode) {
                 // CTRL+N: New Note
                 case KeyEvent.KEYCODE_N:
                     ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
@@ -552,17 +499,51 @@ public class NoteListFragment extends Fragment {
         }
     }
 
+    // Method used to generate toast notifications
+    private void showToast(int message) {
+        Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    public void showFab() {
+        FloatingActionButton floatingActionButton =
+                getActivity().findViewById(R.id.button_floating_action);
+        floatingActionButton.show();
+    }
+
     public void onBackPressed() {
         getActivity().finish();
     }
 
-    public void showFab() {
-        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action);
-        floatingActionButton.show();
+    public void hideFab() {
+        FloatingActionButton floatingActionButton =
+                getActivity().findViewById(R.id.button_floating_action);
+        floatingActionButton.hide();
     }
 
-    public void hideFab() {
-        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action);
-        floatingActionButton.hide();
+    /* The activity that creates an instance of this fragment must
+     * implement this interface in order to receive event call backs. */
+    public interface Listener {
+        void viewNote(String filename);
+
+        void editNote(String filename);
+
+        String getCabString(int size);
+
+        void exportNotes();
+
+        void deleteNotes();
+
+        String loadNoteTitle(String filename) throws IOException;
+
+        String loadNoteDate(String filename);
+
+        void showFab();
+
+        void hideFab();
+
+        void startMultiSelect();
+
+        ArrayList<String> getCabArray();
     }
 }

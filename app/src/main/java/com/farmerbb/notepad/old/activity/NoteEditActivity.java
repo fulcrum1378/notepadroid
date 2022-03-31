@@ -1,18 +1,3 @@
-/* Copyright 2014 Braden Farmer
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *     http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.farmerbb.notepad.old.activity;
 
 import android.content.Context;
@@ -24,6 +9,9 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.old.fragment.NoteEditFragment;
@@ -38,17 +26,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 public class NoteEditActivity extends NotepadBaseActivity implements
-BackButtonDialogFragment.Listener, 
-DeleteDialogFragment.Listener, 
-SaveButtonDialogFragment.Listener, 
-NoteEditFragment.Listener {
+        BackButtonDialogFragment.Listener,
+        DeleteDialogFragment.Listener,
+        SaveButtonDialogFragment.Listener,
+        NoteEditFragment.Listener {
 
-String external;
+    String external;
 
     @Override
     public boolean isShareIntent() {
@@ -69,20 +53,20 @@ String external;
         ThemeManager.setBackgroundColor(this, theme, noteViewEdit);
 
         // Set action bar elevation
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getSupportActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
 
-        if(!(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)) {
+        if (!(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)) {
             // Handle intents
             Intent intent = getIntent();
             String action = intent.getAction();
             String type = intent.getType();
 
             // Intent sent through an external application
-            if(Intent.ACTION_SEND.equals(action) && type != null) {
-                if("text/plain".equals(type)) {
+            if (Intent.ACTION_SEND.equals(action) && type != null) {
+                if ("text/plain".equals(type)) {
                     external = getExternalContent();
-                    if(external != null) {
+                    if (external != null) {
                         newNote();
                     } else {
                         showToast(R.string.loading_external_file);
@@ -93,11 +77,11 @@ String external;
                     finish();
                 }
 
-            // Intent sent through Google Now "note to self"
-            } else if("com.google.android.gm.action.AUTO_SEND".equals(action) && type != null) {
-                if("text/plain".equals(type)) {
+                // Intent sent through Google Now "note to self"
+            } else if ("com.google.android.gm.action.AUTO_SEND".equals(action) && type != null) {
+                if ("text/plain".equals(type)) {
                     external = getExternalContent();
-                    if(external != null) {
+                    if (external != null) {
                         try {
                             // Write note to disk
                             FileOutputStream output = openFileOutput(String.valueOf(System.currentTimeMillis()), Context.MODE_PRIVATE);
@@ -114,15 +98,15 @@ String external;
                         }
                     }
                 }
-            } else if(Intent.ACTION_EDIT.equals(action) && "text/plain".equals(type)) {
+            } else if (Intent.ACTION_EDIT.equals(action) && "text/plain".equals(type)) {
                 external = intent.getStringExtra(Intent.EXTRA_TEXT);
-                if(external != null) {
+                if (external != null) {
                     newNote();
                     return;
                 }
                 finish();
-            } else if(Intent.ACTION_VIEW.equals(action) && "text/plain".equals(type)) {
-                try{
+            } else if (Intent.ACTION_VIEW.equals(action) && "text/plain".equals(type)) {
+                try {
                     InputStream in = getContentResolver().openInputStream(intent.getData());
                     Reader rd = new InputStreamReader(in, "UTF-8");
                     char[] buffer = new char[4096];
@@ -133,11 +117,11 @@ String external;
                     }
                     rd.close();
                     in.close();
-                    external= sb.toString();
-                } catch(Exception e) {
+                    external = sb.toString();
+                } catch (Exception e) {
                     // show msg error loading data?
                 }
-                if(external != null) {
+                if (external != null) {
                     newNote();
                     return;
                 }
@@ -149,10 +133,10 @@ String external;
 
     private String getExternalContent() {
         String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-        if(text == null) return null;
+        if (text == null) return null;
 
         String subject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
-        if(subject == null) return text;
+        if (subject == null) return text;
 
         return subject + "\n\n" + text;
     }
@@ -176,7 +160,7 @@ String external;
         super.onStart();
 
         // Set text in EditView
-        if(external != null) {
+        if (external != null) {
             EditText noteContents = findViewById(R.id.editText1);
             noteContents.setText(external);
             noteContents.setSelection(external.length(), external.length());
@@ -187,7 +171,7 @@ String external;
     // Keyboard shortcuts
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
-        if(event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
             NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
             fragment.dispatchKeyShortcutEvent(event.getKeyCode());
 
@@ -275,8 +259,10 @@ String external;
     }
 
     @Override
-    public void exportNote(String filename) {}
+    public void exportNote(String filename) {
+    }
 
     @Override
-    public void printNote(String contentToPrint) {}
+    public void printNote(String contentToPrint) {
+    }
 }

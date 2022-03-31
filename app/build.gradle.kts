@@ -57,7 +57,7 @@ android {
         kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
 
-    signingConfigs {
+    /*signingConfigs {
         create("release") {
             if(System.getenv("KSTOREFILE") != null) {
                 storeFile = File(System.getenv("KSTOREFILE"))
@@ -67,7 +67,7 @@ android {
             keyAlias = System.getenv("KEYALIAS")
             keyPassword = System.getenv("KEYPWD")
         }
-    }
+    }*/
 
     buildTypes {
         debug {
@@ -80,20 +80,17 @@ android {
             isShrinkResources = true
             proguardFiles.add(getDefaultProguardFile("proguard-android.txt"))
             proguardFiles.add(File("proguard-rules.pro"))
-            signingConfig = signingConfigs.getByName("release")
+            //signingConfig = signingConfigs.getByName("release")
             manifestPlaceholders["appName"] = "@string/app_name"
 
             applicationVariants.all {
                 outputs.map { it as BaseVariantOutputImpl }
                     .forEach { output ->
-                        output.outputFileName = "${project.parent?.name}-${defaultConfig.versionName}.apk"
+                        output.outputFileName =
+                            "${project.parent?.name}-${defaultConfig.versionName}.apk"
                     }
             }
         }
-    }
-
-    lint {
-        abortOnError = false
     }
 }
 
@@ -116,5 +113,7 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.markdownView)
     implementation(libs.material)
-    implementation(libs.supportv4)
+
+    implementation(libs.androidx.documentfile)
+    implementation(libs.androidx.localbroadcastmanager)
 }

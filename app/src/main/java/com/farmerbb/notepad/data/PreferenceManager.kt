@@ -1,18 +1,3 @@
-/* Copyright 2022 Braden Farmer
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.farmerbb.notepad.data
 
 import androidx.compose.ui.text.font.FontFamily
@@ -34,62 +19,51 @@ class PreferenceManager private constructor(
 ) {
     val isLightTheme get() = Prefs.Theme.mapToFlow { theme -> theme.contains("light") }
 
-    val backgroundColorRes get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("light") -> R.color.window_background
-            else -> R.color.window_background_dark
-        }
-    }
+    val backgroundColorRes = R.color.window_background
 
-    val primaryColorRes get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("light") -> R.color.text_color_primary
-            else -> R.color.text_color_primary_dark
-        }
-    }
+    val primaryColorRes = R.color.text_color_primary
 
-    val secondaryColorRes get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("light") -> R.color.text_color_secondary
-            else -> R.color.text_color_secondary_dark
-        }
-    }
+    val secondaryColorRes = R.color.text_color_secondary
 
-    val textFontSize get() = Prefs.FontSize.mapToFlow { fontSize ->
-        when (fontSize) {
-            "smallest" -> 12.sp
-            "small" -> 14.sp
-            "normal" -> 16.sp
-            "large" -> 18.sp
-            else -> 20.sp
+    val textFontSize
+        get() = Prefs.FontSize.mapToFlow { fontSize ->
+            when (fontSize) {
+                "smallest" -> 12.sp
+                "small" -> 14.sp
+                "normal" -> 16.sp
+                "large" -> 18.sp
+                else -> 20.sp
+            }
         }
-    }
 
-    val dateFontSize get() = Prefs.FontSize.mapToFlow { fontSize ->
-        when (fontSize) {
-            "smallest" -> 8.sp
-            "small" -> 10.sp
-            "normal" -> 12.sp
-            "large" -> 14.sp
-            else -> 16.sp
+    val dateFontSize
+        get() = Prefs.FontSize.mapToFlow { fontSize ->
+            when (fontSize) {
+                "smallest" -> 8.sp
+                "small" -> 10.sp
+                "normal" -> 12.sp
+                "large" -> 14.sp
+                else -> 16.sp
+            }
         }
-    }
 
-    val fontFamily get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("sans") -> FontFamily.SansSerif
-            theme.contains("serif") -> FontFamily.Serif
-            else -> FontFamily.Monospace
+    val fontFamily
+        get() = Prefs.Theme.mapToFlow { theme ->
+            when {
+                theme.contains("sans") -> FontFamily.SansSerif
+                theme.contains("serif") -> FontFamily.Serif
+                else -> FontFamily.Monospace
+            }
         }
-    }
 
-    val markdownFont get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("sans") -> "sans"
-            theme.contains("serif") -> "serif"
-            else -> "monospace"
+    val markdownFont
+        get() = Prefs.Theme.mapToFlow { theme ->
+            when {
+                theme.contains("sans") -> "sans"
+                theme.contains("serif") -> "serif"
+                else -> "monospace"
+            }
         }
-    }
 
     val sortOrder get() = Prefs.SortBy.mapToFlow(::toSortOrder)
     val filenameFormat get() = Prefs.ExportFilename.mapToFlow(::toFilenameFormat)
@@ -116,9 +90,7 @@ class PreferenceManager private constructor(
     }
 
     companion object {
-        fun DataStoreManager.prefs(scope: CoroutineScope) = PreferenceManager(
-            dataStoreManager = this,
-            scope = scope
-        )
+        fun DataStoreManager.prefs(scope: CoroutineScope) =
+            PreferenceManager(dataStoreManager = this, scope = scope)
     }
 }
