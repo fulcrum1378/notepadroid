@@ -20,10 +20,10 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
 import ir.mahdiparastesh.notepad.R;
+import ir.mahdiparastesh.notepad.dialog.BackButtonDialogFragment;
+import ir.mahdiparastesh.notepad.dialog.DeleteDialogFragment;
+import ir.mahdiparastesh.notepad.dialog.SaveButtonDialogFragment;
 import ir.mahdiparastesh.notepad.fragment.NoteEditFragment;
-import ir.mahdiparastesh.notepad.fragment.dialog.BackButtonDialogFragment;
-import ir.mahdiparastesh.notepad.fragment.dialog.DeleteDialogFragment;
-import ir.mahdiparastesh.notepad.fragment.dialog.SaveButtonDialogFragment;
 import ir.mahdiparastesh.notepad.utils.ThemeManager;
 
 public class NoteEditActivity extends AppCompatActivity implements
@@ -53,10 +53,11 @@ public class NoteEditActivity extends AppCompatActivity implements
             Intent intent = getIntent();
             String action = intent.getAction();
             String type = intent.getType();
+            boolean supportedFile = type != null &&
+                    (type.startsWith("text/") || type.startsWith("application/"));
 
-            // Intent sent through an external application
             if (Intent.ACTION_SEND.equals(action) && type != null) {
-                if ("text/plain".equals(type)) {
+                if (supportedFile) {
                     external = getExternalContent();
                     if (external != null) newNote();
                     else {
@@ -70,33 +71,28 @@ public class NoteEditActivity extends AppCompatActivity implements
 
                 // Intent sent through Google Now "note to self"
             } else if ("com.google.android.gm.action.AUTO_SEND".equals(action) && type != null) {
-                if ("text/plain".equals(type)) {
+                if (supportedFile) {
                     external = getExternalContent();
-                    if (external != null) {
-                        try {
-                            // Write note to disk
-                            FileOutputStream output = openFileOutput(String.valueOf(System.currentTimeMillis()), Context.MODE_PRIVATE);
-                            output.write(external.getBytes());
-                            output.close();
+                    if (external != null) try {
+                        FileOutputStream output = openFileOutput(String.valueOf(System.currentTimeMillis()), Context.MODE_PRIVATE);
+                        output.write(external.getBytes());
+                        output.close();
 
-                            // Show toast notification and finish
-                            showToast(R.string.note_saved);
-                            finish();
-                        } catch (IOException e) {
-                            // Show error message as toast if file fails to save
-                            showToast(R.string.failed_to_save);
-                            finish();
-                        }
+                        showToast(R.string.note_saved);
+                        finish();
+                    } catch (IOException e) {
+                        showToast(R.string.failed_to_save);
+                        finish();
                     }
                 }
-            } else if (Intent.ACTION_EDIT.equals(action) && "text/plain".equals(type)) {
+            } else if (Intent.ACTION_EDIT.equals(action) && supportedFile) {
                 external = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (external != null) {
                     newNote();
                     return;
                 }
                 finish();
-            } else if (Intent.ACTION_VIEW.equals(action) && "text/plain".equals(type)) {
+            } else if (Intent.ACTION_VIEW.equals(action) && supportedFile) {
                 try {
                     InputStream in = getContentResolver().openInputStream(intent.getData());
                     Reader rd = new InputStreamReader(in, StandardCharsets.UTF_8);
@@ -135,8 +131,6 @@ public class NoteEditActivity extends AppCompatActivity implements
 
         Fragment fragment = new NoteEditFragment();
         fragment.setArguments(bundle);
-
-        // Add NoteEditFragment
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.noteViewEdit, fragment, "NoteEditFragment")
@@ -147,7 +141,6 @@ public class NoteEditActivity extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
 
-        // Set text in EditView
         if (external != null) {
             EditText noteContents = findViewById(R.id.editText1);
             noteContents.setText(external);
@@ -162,7 +155,6 @@ public class NoteEditActivity extends AppCompatActivity implements
         if (event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
             NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
             fragment.dispatchKeyShortcutEvent(event.getKeyCode());
-
             return true;
         }
         return super.dispatchKeyShortcutEvent(event);

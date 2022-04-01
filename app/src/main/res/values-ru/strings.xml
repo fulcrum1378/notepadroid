@@ -63,4 +63,28 @@
     <string name="cab_note_selected">note selected</string>
     <string name="cab_notes_selected">notes selected</string>
     <string name="document">%1$s Document</string>
+
+    <string-array name="font_size_list">
+        <item>Наименьший</item>
+        <item>Мелкий</item>
+        <item>Нормальный</item>
+        <item>Большой</item>
+        <item>Наибольший</item>
+    </string-array>
+    <string-array name="sort_by_list">
+        <item>Дата (сначала недавние)</item>
+        <item>Дата (oldest first)</item>
+        <item>Наименование (А – Я)</item>
+        <item>Наименование (Я – А)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Sans Serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>First line of text</item>
+        <item>First line + timestamp</item>
+        <item>Timestamp + first line</item>
+    </string-array>
 </resources>

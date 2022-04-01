@@ -30,7 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import ir.mahdiparastesh.notepad.R;
 import ir.mahdiparastesh.notepad.activity.SettingsActivity;
-import ir.mahdiparastesh.notepad.fragment.dialog.AboutDialogFragment;
+import ir.mahdiparastesh.notepad.dialog.AboutDialogFragment;
 
 public class WelcomeFragment extends Fragment {
 

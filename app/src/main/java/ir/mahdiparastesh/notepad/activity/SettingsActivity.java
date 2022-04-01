@@ -36,16 +36,14 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         // Add preferences
         addPreferencesFromResource(R.xml.settings_preferences);
 
-        // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
-        // their values. When their values change, their summaries are updated
-        // to reflect the new value, per the Android Design guidelines.
         bindPreferenceSummaryToValue(findPreference("theme"));
         bindPreferenceSummaryToValue(findPreference("font_size"));
         bindPreferenceSummaryToValue(findPreference("sort_by"));
         bindPreferenceSummaryToValue(findPreference("export_filename"));
 
         addPreferencesFromResource(R.xml.settings_preferences_md);
-        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(
+                getPackageName() + "_preferences", Context.MODE_PRIVATE);
         findPreference("direct_edit").setOnPreferenceChangeListener(this);
         findPreference("direct_edit").setEnabled(!pref.getBoolean("markdown", false));
 

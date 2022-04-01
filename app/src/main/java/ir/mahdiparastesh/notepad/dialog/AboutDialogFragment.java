@@ -1,8 +1,9 @@
-package ir.mahdiparastesh.notepad.fragment.dialog;
+package ir.mahdiparastesh.notepad.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +20,8 @@ public class AboutDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(
+                new ContextThemeWrapper(getActivity(), R.style.Theme_Notepad_Dialog));
         final LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.fragment_dialogs, null);
         builder.setView(view)

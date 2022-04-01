@@ -44,14 +44,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import ir.mahdiparastesh.notepad.R;
+import ir.mahdiparastesh.notepad.dialog.BackButtonDialogFragment;
+import ir.mahdiparastesh.notepad.dialog.DeleteDialogFragment;
+import ir.mahdiparastesh.notepad.dialog.FirstRunDialogFragment;
+import ir.mahdiparastesh.notepad.dialog.SaveButtonDialogFragment;
 import ir.mahdiparastesh.notepad.fragment.NoteEditFragment;
 import ir.mahdiparastesh.notepad.fragment.NoteListFragment;
 import ir.mahdiparastesh.notepad.fragment.NoteViewFragment;
 import ir.mahdiparastesh.notepad.fragment.WelcomeFragment;
-import ir.mahdiparastesh.notepad.fragment.dialog.BackButtonDialogFragment;
-import ir.mahdiparastesh.notepad.fragment.dialog.DeleteDialogFragment;
-import ir.mahdiparastesh.notepad.fragment.dialog.FirstRunDialogFragment;
-import ir.mahdiparastesh.notepad.fragment.dialog.SaveButtonDialogFragment;
 import ir.mahdiparastesh.notepad.utils.WebViewInitState;
 import us.feras.mdv.MarkdownView;
 

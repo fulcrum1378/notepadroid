@@ -49,7 +49,7 @@ import ir.mahdiparastesh.notepad.activity.MainActivity;
 import ir.mahdiparastesh.notepad.activity.SettingsActivity;
 import ir.mahdiparastesh.notepad.adapter.NoteListAdapter;
 import ir.mahdiparastesh.notepad.adapter.NoteListDateAdapter;
-import ir.mahdiparastesh.notepad.fragment.dialog.AboutDialogFragment;
+import ir.mahdiparastesh.notepad.dialog.AboutDialogFragment;
 import ir.mahdiparastesh.notepad.utils.NoteListItem;
 import ir.mahdiparastesh.notepad.utils.ScrollPositions;
 
@@ -196,8 +196,7 @@ public class NoteListFragment extends Fragment {
                 listener.startMultiSelect();
                 return true;
             case R.id.action_settings:
-                Intent intentSettings = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(intentSettings);
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
             case R.id.action_import:
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);

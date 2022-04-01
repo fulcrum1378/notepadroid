@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="ir.mahdiparastesh.notepad">
 
     <uses-feature
@@ -23,10 +22,10 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.Notepad">
 
-        <activity-alias
-            android:name=".MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="true"
-            android:targetActivity=".activity.MainActivity">
+            android:launchMode="singleTop">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,19 +38,14 @@
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-        </activity-alias>
-
-        <activity
-            android:name=".activity.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
+        </activity>
 
         <activity
             android:name=".activity.NoteEditActivity"
             android:exported="true"
             android:launchMode="singleTop">
 
-            <intent-filter tools:ignore="AppLinkUrlError">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.SEND" />
@@ -60,7 +54,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.google.android.voicesearch.SELF_NOTE" />
 
-                <data android:mimeType="text/plain" />
+                <data android:scheme="content" />
+                <data android:mimeType="text/*" />
+                <data android:mimeType="application/*" />
             </intent-filter>
         </activity>
 

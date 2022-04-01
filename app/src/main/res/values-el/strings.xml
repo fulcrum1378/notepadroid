@@ -69,9 +69,9 @@
         <item>Όνομα (Ω-Α)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>sans serif</item>
-        <item>serif</item>
-        <item>monospace</item>
+        <item>Sans Serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Μικρότερα</item>

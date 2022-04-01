@@ -19,7 +19,7 @@ android {
         minSdk = 21
         targetSdk = 31
         versionCode = 1
-        versionName = "2.5.0"
+        versionName = "3.0"
         resourceConfigurations.addAll(
             listOf(
                 "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs",

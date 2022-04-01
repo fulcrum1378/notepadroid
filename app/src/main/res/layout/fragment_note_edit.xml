@@ -29,9 +29,6 @@
             android:paddingTop="@dimen/padding_top_bottom"
             android:paddingRight="@dimen/padding_left_right"
             android:paddingBottom="@dimen/padding_top_bottom"
-            android:textColorHint="@color/text_color_hint">
-
-            <requestFocus />
-        </EditText>
+            android:textColorHint="@color/text_color_hint" />
     </ScrollView>
 </LinearLayout>

@@ -39,7 +39,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ir.mahdiparastesh.notepad.R;
-import ir.mahdiparastesh.notepad.fragment.dialog.FirstViewDialogFragment;
+import ir.mahdiparastesh.notepad.dialog.FirstViewDialogFragment;
 import ir.mahdiparastesh.notepad.utils.ThemeManager;
 import us.feras.mdv.MarkdownView;
 

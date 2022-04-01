@@ -11,4 +11,11 @@
         <item name="actionModeBackground">@color/primary</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <style name="Theme.Notepad.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="android:windowBackground">@color/dialog_bg</item>
+    </style>
 </resources>

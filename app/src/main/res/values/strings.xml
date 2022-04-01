@@ -70,9 +70,9 @@
         <item>Name (Z to A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>sans serif</item>
-        <item>serif</item>
-        <item>monospace</item>
+        <item>Sans Serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Smallest</item>
@@ -85,5 +85,31 @@
         <item>First line of text</item>
         <item>First line + timestamp</item>
         <item>Timestamp + first line</item>
+    </string-array>
+
+
+    <!-- DO NOT TRANSLATE -->
+    <string-array name="sort_by_list_values" translatable="false">
+        <item>date</item>
+        <item>date-reversed</item>
+        <item>name</item>
+        <item>name-reversed</item>
+    </string-array>
+    <string-array name="theme_list_values" translatable="false">
+        <item>sans</item>
+        <item>serif</item>
+        <item>monospace</item>
+    </string-array>
+    <string-array name="font_size_list_values" translatable="false">
+        <item>smallest</item>
+        <item>small</item>
+        <item>normal</item>
+        <item>large</item>
+        <item>largest</item>
+    </string-array>
+    <string-array name="exported_filename_list_values" translatable="false">
+        <item>text-only</item>
+        <item>text-timestamp</item>
+        <item>timestamp-text</item>
     </string-array>
 </resources>
