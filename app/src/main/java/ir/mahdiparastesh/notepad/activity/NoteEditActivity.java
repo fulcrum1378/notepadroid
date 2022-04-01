@@ -54,7 +54,7 @@ public class NoteEditActivity extends AppCompatActivity implements
             String action = intent.getAction();
             String type = intent.getType();
             boolean supportedFile = type != null &&
-                    (type.startsWith("text/") || type.startsWith("application/"));
+                    (type.startsWith("text/") || type.startsWith("application/"));// || type.equals("")
 
             if (Intent.ACTION_SEND.equals(action) && type != null) {
                 if (supportedFile) {

@@ -29,18 +29,15 @@ android {
     }
 
     buildFeatures { compose = true }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
 
     /*signingConfigs {
@@ -54,7 +51,6 @@ android {
             keyPassword = System.getenv("KEYPWD")
         }
     }*/
-
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -64,7 +60,6 @@ android {
             //signingConfig = signingConfigs.getByName("release")
         }
     }
-
     //lint { abortOnError = false }
 }
 
