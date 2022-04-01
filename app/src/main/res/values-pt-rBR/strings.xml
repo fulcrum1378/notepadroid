@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="action_cancel">Cancelar</string>
     <string name="action_close">Fechar</string>
@@ -15,11 +15,9 @@
     <string name="action_sort_by">Ordenar notas por</string>
     <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notepad</string>
-    <string name="app_name_debug">Notepad (Depuração)</string>
     <string name="cab_note_selected">nota selecionada</string>
     <string name="cab_notes_selected">notas selecionadas</string>
     <string name="changes_discarded">Alterações descartadas</string>
-    <string name="dialog_about_message">Notepad: um simples aplicativo de anotações\n\n&#169; %d Braden Farmer\nLogotipo do aplicativo por Tobaloidee</string>
     <string name="dialog_about_title">Sobre o Notepad</string>
     <string name="dialog_are_you_sure">Você tem certeza?</string>
     <string name="dialog_delete_button_title">Apagar nota</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">Perguntar antes de salvar</string>
     <string name="send_to">Compartilhar nota para&#8230;</string>
     <string name="view_note">Visualizar Nota</string>
-    <string name="action_install">Instalar</string>
-    <string name="action_no_thanks">Não, obrigado</string>
     <string name="pref_title_show_date">Mostrar data/hora</string>
     <string name="action_theme">Tema</string>
     <string name="pref_title_direct_edit">Editar notas diretamente</string>
@@ -65,25 +61,17 @@
     <string name="document">%1$s Documento</string>
     <string name="no_notes_to_export">Nenhuma nota selecionada para exportar</string>
     <string name="no_notes_to_delete">Nenhuma nota selecionada para apagar</string>
-    <string name="check_for_updates">Verificar se há atualizações</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
-    <string-array name="sort_by_list">
+    <string-array name="sort_by_list" tools:ignore="Typos">
         <item>Data (mais recente primeiro)</item>
         <item>Data (mais antiga primeiro)</item>
         <item>Nome (A a Z)</item>
         <item>Nome (Z a A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Claro / sem serifa</item>
-        <item>Claro / com serifa</item>
-        <item>Claro / mono-espaçada</item>
-        <item>Escuro / sem serifa</item>
-        <item>Escuro / com serifa</item>
-        <item>Escuro / mono-espaçada</item>
+        <item>sem serifa</item>
+        <item>com serifa</item>
+        <item>mono-espaçada</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Menor</item>

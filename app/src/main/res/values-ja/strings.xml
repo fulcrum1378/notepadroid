@@ -15,11 +15,9 @@
     <string name="action_sort_by">並べ替え</string>
     <string name="action_export_filename">アプリ外保存時のファイル名</string>
     <string name="app_name">メモ帳</string>
-    <string name="app_name_debug">メモ帳 (デバッグ)</string>
     <string name="cab_note_selected">つを選択中</string>
     <string name="cab_notes_selected">つを選択中</string>
     <string name="changes_discarded">放棄された変更</string>
-    <string name="dialog_about_message">メモ帳: シンプルなメモ帳アプリ\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">このアプリについて</string>
     <string name="dialog_are_you_sure">良いですか?</string>
     <string name="dialog_delete_button_title">メモを削除</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">保存時に確認する</string>
     <string name="send_to">メモをシェア&#8230;</string>
     <string name="view_note">メモを見る</string>
-    <string name="action_install">インストール</string>
-    <string name="action_no_thanks">いいえ</string>
     <string name="pref_title_show_date">日時を表示</string>
     <string name="action_theme">テーマ</string>
     <string name="pref_title_direct_edit">直接メモを編集</string>
@@ -65,11 +61,6 @@
     <string name="document">%1$s 文書</string>
     <string name="no_notes_to_export">選択されていません</string>
     <string name="no_notes_to_delete">選択されていません</string>
-    <string name="check_for_updates">アプデを確認</string>
-    <string name="preview_app_title">メモ帳アプリのプレビュー</string>
-    <string name="preview_app_message">テスト版に切り替えますか? 元に戻すには再インストールが必要です</string>
-    <string name="blue_pill">安定版に安住</string>
-    <string name="red_pill">危険を承知で試す</string>
 
     <string-array name="sort_by_list">
         <item>日付順 (最新が先頭)</item>
@@ -78,12 +69,9 @@
         <item>名前順 (Z - A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>明テーマ / サンセリフ</item>
-        <item>明テーマ / セリフ</item>
-        <item>明テーマ / 固定幅</item>
-        <item>暗テーマ / サンセリフ</item>
-        <item>暗テーマ / セリフ</item>
-        <item>暗テーマ / 固定幅</item>
+        <item>サンセリフ</item>
+        <item>セリフ</item>
+        <item>固定幅</item>
     </string-array>
     <string-array name="font_size_list">
         <item>極小</item>

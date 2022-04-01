@@ -16,12 +16,9 @@
     </string-array>
 
     <string-array name="theme_list">
-        <item>Светлая / sans serif</item>
-        <item>Светлая / serif</item>
-        <item>Светлая / monospace</item>
-        <item>Темная / sans serif</item>
-        <item>Темная / serif</item>
-        <item>Темная / monospace</item>
+        <item>sans serif</item>
+        <item>serif</item>
+        <item>monospace</item>
     </string-array>
 
     <string-array name="exported_filename_list">

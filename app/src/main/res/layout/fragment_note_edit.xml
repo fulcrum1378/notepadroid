@@ -23,6 +23,7 @@
             android:ems="10"
             android:gravity="top"
             android:hint="@string/edit_text"
+            android:importantForAutofill="no"
             android:inputType="textMultiLine|textCapSentences"
             android:paddingLeft="@dimen/padding_left_right"
             android:paddingTop="@dimen/padding_top_bottom"

@@ -2,7 +2,7 @@
     android:title="@string/action_settings">
 
     <ListPreference
-        android:defaultValue="light-sans"
+        android:defaultValue="sans"
         android:entries="@array/theme_list"
         android:entryValues="@array/theme_list_values"
         android:key="theme"

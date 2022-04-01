@@ -1,14 +1,7 @@
 [versions]
 
-# Notepad
-notepad-versionCode = "112"
-notepad-versionName = "2.3.7"
-
 # Android SDK
-android-compileSdk = "31"
 android-gradlePlugin = "7.1.2"
-android-minSdk = "21"
-android-targetSdk = "31"
 
 # AndroidX / Jetpack
 androidx-activity = "1.4.0"

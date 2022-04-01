@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.api.BaseVariantOutputImpl
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -14,33 +12,23 @@ repositories {
 }
 
 android {
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = 31
 
     defaultConfig {
-        applicationId = "com.farmerbb.notepad"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-
-        versionCode = libs.versions.notepad.versionCode.get().toInt()
-        versionName = libs.versions.notepad.versionName.get()
-
+        applicationId = "ir.mahdiparastesh.notepad"
+        minSdk = 21
+        targetSdk = 31
+        versionCode = 1
+        versionName = "2.5.0"
         resourceConfigurations.addAll(
             listOf(
                 "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs",
                 "pt-rBR", "no", "zh-rTW", "ar", "tr", "el", "bn", "sw", "es", "ja"
             )
         )
-
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-
-        buildConfigField("long", "TIMESTAMP", "${System.currentTimeMillis()}L")
     }
 
-    buildFeatures {
-        compose = true
-    }
+    buildFeatures { compose = true }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -48,9 +36,7 @@ android {
     }
 
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + listOf(
-            "-Xopt-in=kotlin.RequiresOptIn"
-        )
+        freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
 
     composeOptions {
@@ -70,32 +56,19 @@ android {
     }*/
 
     buildTypes {
-        debug {
-            applicationIdSuffix = ".debug"
-            manifestPlaceholders["appName"] = "@string/app_name_debug"
-        }
-
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles.add(getDefaultProguardFile("proguard-android.txt"))
             proguardFiles.add(File("proguard-rules.pro"))
             //signingConfig = signingConfigs.getByName("release")
-            manifestPlaceholders["appName"] = "@string/app_name"
-
-            applicationVariants.all {
-                outputs.map { it as BaseVariantOutputImpl }
-                    .forEach { output ->
-                        output.outputFileName =
-                            "${project.parent?.name}-${defaultConfig.versionName}.apk"
-                    }
-            }
         }
     }
+
+    //lint { abortOnError = false }
 }
 
 dependencies {
-    // Red-pill app
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.coroutines)
@@ -108,7 +81,6 @@ dependencies {
     implementation(libs.systemuicontroller)
     debugImplementation(libs.compose.ui.tooling)
 
-    // Blue-pill app
     implementation(libs.appcompat)
     implementation(libs.commonsLang)
     implementation(libs.markdownView)

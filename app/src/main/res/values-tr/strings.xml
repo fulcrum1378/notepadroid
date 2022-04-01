@@ -8,9 +8,7 @@
     <string name="action_export">Dışa aktar</string>
     <string name="action_export_filename">Dışa aktarılan dosya adı</string>
     <string name="action_font_size">Yazı boyutu</string>
-    <string name="action_install">Yükle</string>
     <string name="action_new">Yeni Not</string>
-    <string name="action_no_thanks">Hayır, Teşekkürler</string>
     <string name="action_print">Yazdır</string>
     <string name="action_save">Kaydet</string>
     <string name="action_select_all">Hepsini seç</string>
@@ -20,15 +18,9 @@
     <string name="action_start_selection">Notları seç</string>
     <string name="action_theme">Tema</string>
     <string name="app_name">Not Defteri</string>
-    <string name="app_name_debug">Not Defteri (Hata Ayıklama)</string>
     <string name="cab_note_selected">Not seçildi</string>
     <string name="cab_notes_selected">Notlar seçildi</string>
     <string name="changes_discarded">Değişiklikler silindi</string>
-    <string name="check_for_updates">Güncellemeleri kontrol et</string>
-    <string name="dialog_about_message">"Not Defteri, basit bir not alma uygulamasıdır.
-
-© %d Braden Farmer
-App logo by Tobaloidee"</string>
     <string name="dialog_about_title">Hakkında</string>
     <string name="dialog_are_you_sure">Silmek istediğinizden emin misiniz?</string>
     <string name="dialog_delete_button_title">Notu sil</string>
@@ -70,10 +62,6 @@ Bir not oluşturmak için Yeni Not düğmesine (artı işareti) tıklayın."</st
     <string name="pref_title_show_dialogs">Kaydetmeden önce sor</string>
     <string name="send_to">Notu paylaş…</string>
     <string name="view_note">Notu görüntüle</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>Date (newest first)</item>
@@ -82,12 +70,9 @@ Bir not oluşturmak için Yeni Not düğmesine (artı işareti) tıklayın."</st
         <item>Name (Z to A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Light / sans serif</item>
-        <item>Light / serif</item>
-        <item>Light / monospace</item>
-        <item>Dark / sans serif</item>
-        <item>Dark / serif</item>
-        <item>Dark / monospace</item>
+        <item>sans serif</item>
+        <item>serif</item>
+        <item>monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Smallest</item>

@@ -15,11 +15,9 @@
     <string name="action_sort_by">নোট বাছাই করুন</string>
     <string name="action_export_filename">এক্সপোর্টকৃত ফাইল নাম</string>
     <string name="app_name">নোটপ্যাড</string>
-    <string name="app_name_debug">নোটপ্যাড (ডিবাগ)</string>
     <string name="cab_note_selected">নোট নির্বাচিত হয়েছে</string>
     <string name="cab_notes_selected">নোটগুলো নির্বাচিত হয়েছে</string>
     <string name="changes_discarded">পরিবর্তন অগ্রাহ্য করা হয়েছে</string>
-    <string name="dialog_about_message">নোটপ্যাড: একটা সিম্পল নোট নেয়ার অ্যাপলিকেশন\n\n&#169; %d ব্র্যাডেন ফার্মার\nঅ্যাপ লোগো বানিয়েছে টোবলোইডি</string>
     <string name="dialog_about_title">নোটপ্যাড সম্পর্কে</string>
     <string name="dialog_are_you_sure">আপনি কি নিশ্চিত?</string>
     <string name="dialog_delete_button_title">নোট মুছে ফেলুন</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">সংরক্ষণের আগে জিজ্ঞেস করুন</string>
     <string name="send_to">শেয়ার করুন&#8230;</string>
     <string name="view_note">নোট দেখুন</string>
-    <string name="action_install">ইন্সটল করুন</string>
-    <string name="action_no_thanks">না থাক</string>
     <string name="pref_title_show_date">তারিখ/সময় দেখান</string>
     <string name="action_theme">থিম</string>
     <string name="pref_title_direct_edit">সরাসরি নোটগুলো সম্পাদনা করুন</string>
@@ -65,11 +61,6 @@
     <string name="document">%1$s ডকুমেন্ট</string>
     <string name="no_notes_to_export">এক্সপোর্ট করার জন্য কোন নোট নির্বাচন করা হয়নি</string>
     <string name="no_notes_to_delete">মুছে ফেলার জন্য কোন নোট নির্বাচন করা হয়নি</string>
-    <string name="check_for_updates">হালনাগাদ আছে কি না দেখুন</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>তারিখ (একদম নতুন)</item>
@@ -78,12 +69,9 @@
         <item>নাম (চন্দ্রবিন্দু থেকে অ)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>উজ্জ্বল / সানস সিরিফ</item>
-        <item>উজ্জ্বল / সেরিফ</item>
-        <item>উজ্জ্বল / মনোস্পেস</item>
-        <item>কৃষ্ণাভ / সানস সিরিফ</item>
-        <item>কৃষ্ণাভ / সেরিফ</item>
-        <item>কৃষ্ণাভ / মনোস্পেস</item>
+        <item>সানস সিরিফ</item>
+        <item>েরিফ</item>
+        <item>মনোস্পেস</item>
     </string-array>
     <string-array name="font_size_list">
         <item>একদম ছোট</item>

@@ -15,11 +15,9 @@
     <string name="action_export_filename">Exported filename</string>
     <string name="action_sort_by">정렬 순서</string>
     <string name="app_name">노트패드</string>
-    <string name="app_name_debug">@string/app_name</string>
     <string name="cab_note_selected">선택됨</string>
     <string name="cab_notes_selected">선택됨</string>
     <string name="changes_discarded">변경 취소됨</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">노트패드 정보</string>
     <string name="dialog_are_you_sure">노트를 삭제하시겠어요?</string>
     <string name="dialog_delete_button_title">노트 삭제</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">저장전에 물어보기</string>
     <string name="send_to">노트 공유하기&#8230;</string>
     <string name="view_note">노트 보기</string>
-    <string name="action_install">설치</string>
-    <string name="action_no_thanks">아니오</string>
     <string name="pref_title_show_date">날짜/시간 보이기</string>
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
@@ -65,11 +61,6 @@
     <string name="document">%1$s Document</string>
     <string name="no_notes_to_export">No notes selected to export</string>
     <string name="no_notes_to_delete">No notes selected to delete</string>
-    <string name="check_for_updates">Check for Updates</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>날짜 (내림차순)</item>
@@ -78,12 +69,9 @@
         <item>Name (Z to A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Light / sans serif</item>
-        <item>Light / serif</item>
-        <item>Light / monospace</item>
-        <item>Dark / sans serif</item>
-        <item>Dark / serif</item>
-        <item>Dark / monospace</item>
+        <item>sans serif</item>
+        <item>serif</item>
+        <item>monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Smallest</item>

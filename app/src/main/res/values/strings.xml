@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Notepad</string>
+    <string name="about" translatable="false">Mahdi Parastesh</string>
 
     <string name="action_cancel">Cancel</string>
     <string name="action_close">Close</string>
@@ -14,12 +16,9 @@
     <string name="action_share">Share</string>
     <string name="action_sort_by">Sort notes by</string>
     <string name="action_export_filename">Exported filename</string>
-    <string name="app_name">Notepad</string>
-    <string name="app_name_debug">Notepad (Debug)</string>
     <string name="cab_note_selected">note selected</string>
     <string name="cab_notes_selected">notes selected</string>
     <string name="changes_discarded">Changes discarded</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">About Notepad</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete note</string>
@@ -52,8 +51,6 @@
     <string name="pref_title_show_dialogs">Ask before saving</string>
     <string name="send_to">Share note to&#8230;</string>
     <string name="view_note">View Note</string>
-    <string name="action_install">Install</string>
-    <string name="action_no_thanks">No Thanks</string>
     <string name="pref_title_show_date">Show date/time</string>
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
@@ -65,11 +62,6 @@
     <string name="document">%1$s Document</string>
     <string name="no_notes_to_export">No notes selected to export</string>
     <string name="no_notes_to_delete">No notes selected to delete</string>
-    <string name="check_for_updates">Check for Updates</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>Date (newest first)</item>
@@ -78,12 +70,9 @@
         <item>Name (Z to A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Light / sans serif</item>
-        <item>Light / serif</item>
-        <item>Light / monospace</item>
-        <item>Dark / sans serif</item>
-        <item>Dark / serif</item>
-        <item>Dark / monospace</item>
+        <item>sans serif</item>
+        <item>serif</item>
+        <item>monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Smallest</item>

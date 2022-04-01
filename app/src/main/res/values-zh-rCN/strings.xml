@@ -15,11 +15,9 @@
     <string name="action_sort_by">排序方式</string>
     <string name="action_export_filename">导出文件名</string>
     <string name="app_name">Notepad</string>
-    <string name="app_name_debug">@string/app_name</string>
     <string name="cab_note_selected">项目已选</string>
     <string name="cab_notes_selected">项目已选</string>
     <string name="changes_discarded">已舍弃更改</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">关于 Notepad</string>
     <string name="dialog_are_you_sure">确认？</string>
     <string name="dialog_delete_button_title">删除笔记</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">保存笔记前请求确认</string>
     <string name="send_to">笔记分享方式</string>
     <string name="view_note">查看笔记</string>
-    <string name="action_install">安装</string>
-    <string name="action_no_thanks">不，谢了</string>
     <string name="pref_title_show_date">列表中显示修改时间</string>
     <string name="action_theme">主题</string>
     <string name="pref_title_direct_edit">打开笔记即开始编辑</string>
@@ -65,11 +61,6 @@
     <string name="document">%1$s 个文档</string>
     <string name="no_notes_to_export">导出：未选择任何笔记</string>
     <string name="no_notes_to_delete">删除：未选择任何笔记</string>
-    <string name="check_for_updates">检查更新</string>
-    <string name="preview_app_title">Notepad 预览版</string>
-    <string name="preview_app_message">尝试 Notepad 从零写起的未完成的预览版本！&lt;br&gt;&lt;br&gt;切换版本前，请查看 &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; 了解预览版中还缺少哪些功能的详细信息。&lt;br&gt;&lt;br&gt;\"这是你最后的机会，在这之后就没有回头路了\" (没有应用卸载和重新安装)</string>
-    <string name="blue_pill">停留在稳定版</string>
-    <string name="red_pill">尝试预览版</string>
 
     <string-array name="sort_by_list">
         <item>由新至旧</item>
@@ -77,13 +68,10 @@
         <item>标题顺序</item>
         <item>标题逆序</item>
     </string-array>
-    <string-array name="theme_list">
+    <string-array name="theme_list"><!--NOT TRUE-->
         <item>浅色无衬线体</item>
         <item>浅色衬线体</item>
         <item>浅色等宽字体</item>
-        <item>深色无衬线体</item>
-        <item>深色衬线体</item>
-        <item>深色等宽字体</item>
     </string-array>
     <string-array name="font_size_list">
         <item>极小</item>

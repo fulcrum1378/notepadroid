@@ -15,11 +15,9 @@
     <string name="action_sort_by">Řadit dle</string>
     <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notepad</string>
-    <string name="app_name_debug">Notepad (Debug)</string>
     <string name="cab_note_selected">poznámka vybrána</string>
     <string name="cab_notes_selected">poznámky vybrány</string>
     <string name="changes_discarded">Změny zrušeny</string>
-    <string name="dialog_about_message">Notepad: jednoduchá apka na poznámky\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">O Notepad</string>
     <string name="dialog_are_you_sure">Jste si jistý?</string>
     <string name="dialog_delete_button_title">Smazat poznámku</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">Před uložením se zeptat</string>
     <string name="send_to">Sdílet pomocí&#8230;</string>
     <string name="view_note">Zobrazit poznámku</string>
-    <string name="action_install">Instalovat</string>
-    <string name="action_no_thanks">Ne, díky</string>
     <string name="pref_title_show_date">Zobrazit datum/čas</string>
     <string name="action_theme">Barevné téma</string>
     <string name="pref_title_direct_edit">Upravit poznámky přímo</string>
@@ -65,11 +61,6 @@
     <string name="document">%1$s Dokument</string>
     <string name="no_notes_to_export">Nejsou vybrány žádné poznámky pro export</string>
     <string name="no_notes_to_delete">Nejsou vybrány žádné poznámky ke smazání</string>
-    <string name="check_for_updates">Check for Updates</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>Data (nejnovější nejdříve)</item>
@@ -78,12 +69,9 @@
         <item>Názvu (Z do A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Světlé / sans serif</item>
-        <item>Světlé / serif</item>
-        <item>Světlé / monospace</item>
-        <item>Tmavé / sans serif</item>
-        <item>Tmavé / serif</item>
-        <item>Tmavé / monospace</item>
+        <item>sans serif</item>
+        <item>serif</item>
+        <item>monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Nejmenší</item>

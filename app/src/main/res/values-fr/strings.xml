@@ -15,11 +15,9 @@
     <string name="action_sort_by">Trier par</string>
     <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Bloc-Notes</string>
-    <string name="app_name_debug">@string/app_name</string>
     <string name="cab_note_selected">Note sélectionnée</string>
     <string name="cab_notes_selected">Notes sélectionnées</string>
     <string name="changes_discarded">Modifications abandonnées</string>
-    <string name="dialog_about_message">Bloc-Notes&#160;: une application de prise de notes simple\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">A propos de Bloc-Notes</string>
     <string name="dialog_are_you_sure">Etes-vous sûr&#160;?</string>
     <string name="dialog_delete_button_title">Supprimer la note</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">Confirmer avant d\'enregistrer</string>
     <string name="send_to">Envoyer à</string>
     <string name="view_note">Afficher</string>
-    <string name="action_install">Installer</string>
-    <string name="action_no_thanks">Non merci</string>
     <string name="pref_title_show_date">Afficher la date</string>
     <string name="action_theme">Thème</string>
     <string name="pref_title_direct_edit">Editer directement les notes</string>
@@ -65,11 +61,6 @@
     <string name="document">%1$s Document</string>
     <string name="no_notes_to_export">Pas de note à exporter</string>
     <string name="no_notes_to_delete">Pas de note à supprimer</string>
-    <string name="check_for_updates">Vérifier les mises à jour</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>Date (la plus récente en premier)</item>
@@ -78,12 +69,9 @@
         <item>Nom (de Z à A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Clair / sans serif</item>
-        <item>Clair / serif</item>
-        <item>Clair / monospace</item>
-        <item>Sombre / sans serif</item>
-        <item>Sombre / serif</item>
-        <item>Sombre / monospace</item>
+        <item>sans serif</item>
+        <item>serif</item>
+        <item>monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Plus petit</item>

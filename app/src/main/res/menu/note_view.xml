@@ -19,5 +19,19 @@
         android:icon="@drawable/ic_action_share"
         android:orderInCategory="100"
         android:title="@string/action_share"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
+    <!-- Export button -->
+    <item
+        android:id="@+id/action_export"
+        android:icon="@drawable/ic_action_sd_storage"
+        android:orderInCategory="100"
+        android:title="@string/action_export"
+        app:showAsAction="never" />
+    <!-- Print button -->
+    <item
+        android:id="@+id/action_print"
+        android:orderInCategory="100"
+        android:title="@string/action_print"
+        app:showAsAction="never" />
+
 </menu>

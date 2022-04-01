@@ -14,11 +14,9 @@
     <string name="action_share">مشاركة</string>
     <string name="action_sort_by">فرز الملاحظات من خلال</string>
     <string name="action_export_filename">اسم الملف الذي تمّ تصديره</string>
-    <string name="app_name_debug">الدَّفتر (Debug)</string>
     <string name="cab_note_selected">" ملاحظةٌ محدّدة"</string>
     <string name="cab_notes_selected">ملاحظات محدّدة</string>
     <string name="changes_discarded">تم إتلاف التعديلات</string>
-    <string name="dialog_about_message">الدفتر: برنامجٌ بسيطٌ لتسجيل الملاحظات\n\n&#169; %d Braden Farmer\nصمّم الشعار: Tobaloidee\nنقله إلى العربيّة: وسيم الكردي</string>
     <string name="dialog_about_title">نبذة عن برنامج (الدّفتر)</string>
     <string name="dialog_are_you_sure">هل أنت متأكّد؟</string>
     <string name="dialog_delete_button_title">حذف الملحوظة</string>
@@ -51,8 +49,6 @@
     <string name="pref_title_show_dialogs">اسأل قبل الحفظ</string>
     <string name="send_to">"شارك الملاحظة مع&#8230; "</string>
     <string name="view_note">اعرض الملاحظة</string>
-    <string name="action_install">تثبيت</string>
-    <string name="action_no_thanks">لا شكرًا</string>
     <string name="pref_title_show_date">اعرض التاريخ/الوقت</string>
     <string name="action_theme">النسق المظهريّ</string>
     <string name="pref_title_direct_edit">تعديل الملاحظات مباشرةً</string>
@@ -64,9 +60,4 @@
     <string name="document">مستند %1$s</string>
     <string name="no_notes_to_export">لم تُحَدَّد ملاحظاتٌ لتصديرها</string>
     <string name="no_notes_to_delete">لم تُحَدَّد ملاحظاتٌ لحذفها</string>
-    <string name="check_for_updates">تحقّق من التحديثات</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 </resources>

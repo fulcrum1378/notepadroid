@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Notepad" parent="Theme.Notepad.Base" />
+    <style name="Theme.Notepad" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="actionModeBackground">@color/primary</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 </resources>

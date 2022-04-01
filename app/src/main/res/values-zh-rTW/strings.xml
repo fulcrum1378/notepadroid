@@ -15,11 +15,9 @@
     <string name="action_sort_by">排序方式</string>
     <string name="action_export_filename">匯出檔案名</string>
     <string name="app_name">Notepad</string>
-    <string name="app_name_debug">@string/app_name</string>
     <string name="cab_note_selected">已選筆記</string>
     <string name="cab_notes_selected">已選筆記</string>
     <string name="changes_discarded">已放棄更改</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">關於 Notepad</string>
     <string name="dialog_are_you_sure">確定？</string>
     <string name="dialog_delete_button_title">移除筆記</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">請確定是否存儲筆記</string>
     <string name="send_to">筆記分享方式</string>
     <string name="view_note">檢視筆記</string>
-    <string name="action_install">安裝</string>
-    <string name="action_no_thanks">不，謝謝</string>
     <string name="pref_title_show_date">在清單中顯示修改時間</string>
     <string name="action_theme">主題</string>
     <string name="pref_title_direct_edit">打開筆記即可編輯</string>
@@ -65,11 +61,6 @@
     <string name="document">%1$s 個文件</string>
     <string name="no_notes_to_export">匯出：未選取任何筆記</string>
     <string name="no_notes_to_delete">移除：未選取任何筆記</string>
-    <string name="check_for_updates">檢查更新</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>由新至舊</item>
@@ -77,13 +68,10 @@
         <item>名字（A 到 Z）</item>
         <item>名字（Z 到 A）</item>
     </string-array>
-    <string-array name="theme_list">
+    <string-array name="theme_list"><!--NOT TRUE-->
         <item>淺色無襯線體</item>
         <item>淺色襯線體</item>
         <item>淺色等寬</item>
-        <item>深色無襯線體</item>
-        <item>深色襯線體</item>
-        <item>深色等寬</item>
     </string-array>
     <string-array name="font_size_list">
         <item>極小</item>

@@ -15,11 +15,9 @@
     <string name="action_sort_by">Ordenar notas por</string>
     <string name="action_export_filename">Exportado nombre de archivo</string>
     <string name="app_name">Notepad</string>
-    <string name="app_name_debug">Notepad (Depuración)</string>
     <string name="cab_note_selected">Nota seleccionada</string>
     <string name="cab_notes_selected">Notas seleccionadas</string>
     <string name="changes_discarded">Cambios descartados</string>
-    <string name="dialog_about_message">Notepad: una app simple de toma de notas\n\n&#169; %d Braden Farmer\nlogotipo de la aplicación por Tobaloidee</string>
     <string name="dialog_about_title">Sobre Notepad</string>
     <string name="dialog_are_you_sure">¿Estás seguro?</string>
     <string name="dialog_delete_button_title">Eliminar nota</string>
@@ -52,8 +50,6 @@
     <string name="pref_title_show_dialogs">Preguntar antes de guardar</string>
     <string name="send_to">Compartir nota con&#8230;</string>
     <string name="view_note">Ver Nota</string>
-    <string name="action_install">Instalar</string>
-    <string name="action_no_thanks">No, Gracias</string>
     <string name="pref_title_show_date">Mostrar fecha/hora</string>
     <string name="action_theme">Tema</string>
     <string name="pref_title_direct_edit">Editar notas directamente</string>
@@ -65,11 +61,6 @@
     <string name="document">%1$s Documento</string>
     <string name="no_notes_to_export">Ninguna nota seleccionada para exportar</string>
     <string name="no_notes_to_delete">Ninguna nota seleccionada para eliminar</string>
-    <string name="check_for_updates">Comprobar actualizaciones</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>Fecha (más reciente primero)</item>
@@ -78,12 +69,9 @@
         <item>Nombre (Z a A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Claro / sans serif</item>
-        <item>Claro / serif</item>
-        <item>Claro / monospace</item>
-        <item>Oscuro / sans serif</item>
-        <item>Oscuro / serif</item>
-        <item>Oscuro / monospace</item>
+        <item>sans serif</item>
+        <item>serif</item>
+        <item>monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Más pequeño</item>
